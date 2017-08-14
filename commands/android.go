@@ -15,15 +15,16 @@ func androidChecker(path string) error {
 	settingGradlePath := filepath.Join(path, "settings.gradle")
 	settingGradleFile := loadFile(settingGradlePath)
 	result := parseSetting(settingGradleFile)
-	for i:= range result{
+	for i := range result {
 		modulePath := result[i][1]
+		moduleAbsPath := filepath.Join(path, modulePath)
 		mainBuildGradlePath := filepath.Join(path, modulePath, "build.gradle")
 		mainBuildGradleFile := loadFile(mainBuildGradlePath)
 		isApplication := isApplication(mainBuildGradleFile)
-		logger.Info(modulePath,isApplication)
-		if  isApplication{
-			parseManifest(modulePath)
-			parseBuildGradle(modulePath)
+		logger.Info(modulePath, isApplication)
+		if isApplication {
+			parseManifest(moduleAbsPath)
+			parseBuildGradle(moduleAbsPath)
 		}
 	}
 	return nil
@@ -110,9 +111,15 @@ func isApplication(mainBuildGradle []byte) bool {
 }
 
 func parseManifest(modulePath string) {
-
+	/*mainManifestPath := filepath.Join(modulePath,"src","main" "AndroidManifest.xml")
+	mainManifestFile := loadFile(mainManifestPath)
+	mainManifestFile*/
 }
 
 func parseBuildGradle(modulePath string) {
-
+	mainBuildGradlePath := filepath.Join(modulePath, "build.gradle")
+	mainBuildGradleFile := loadFile(mainBuildGradlePath)
+	reg1 := regexp.MustCompile(`(?<=dependencies[\s]*\{)([.\r\n]*)(?=\})`)
+	dataSlice1 := reg1.FindAllSubmatchIndex(mainBuildGradleFile, -1)
+	fmt.Println(dataSlice1)
 }
