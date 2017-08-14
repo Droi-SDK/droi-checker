@@ -1,0 +1,6 @@
+package: github.com/Droi-SDK/droi-checker
+import:
+- package: github.com/levigross/grequests
+- package: github.com/urfave/cli
+- package: github.com/fatih/color
+- package: github.com/mattn/go-colorable
