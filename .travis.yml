@@ -13,11 +13,11 @@ deploy:
   api_key:
     secure: d5nI4WkBWISl6vk/EOeQNBU6xxJ51DsStk5Ce+fj4Zj0fwWTK1wE2iVLv9jezNIVo2yB4CP3eFDwAYvLCtunmmN4F1njMR+jXTMWOdl23XwhFFacF3JczrLXRkfBFz0NCdur2zfhK9S37nKqHl8m/J4/l/zThvFYl4V1uc0T2oAEAdbeMT7xx1gsnmVuyI/fS66Xg4ZHL6aQOj3Fr9PFu/Y/ztKMQm3riaIFCWzenklp9BJLJmEyfBUYWWU75u9+746jnVaIlANpuLXz1vZ/r/3yDpVVIeB733JtXhRvAVg0svjO0kvub3KZH/ukY8peKNsG2N67bei9ZT5Hei5KabMPjMI8o40wicH8Dv7hex/y1lVNHRNam1Lw/8+4LLGawPYvwfThtAXZVMRQsgzhLO8ZBHk/OZHHCjpWYE/osSX0svK7Iizp8MX4Drv1cb0CJWKR2ZVDdx1jNyBqiYbyPuBE5kbL+wpyr4tFDsYao6C3MxetPZZZNckPgwbFSpw92wo6N31T3c4DMJA8L/+T2JY4KPRC+73rQ5sshzMMe3pMICZrtrjJ4CnIkCwYxjbDW4do5UzJqTmzV7TwtS46lZ4ekkeic2IHU8gCfjq/Em8l99QniMY9EJ7VC6svadk1BlkM41EvOsFp1ZCgcobfDMnUWDHUvt8vY9EQooMiPXs=
   file:
-    - droi-checker-darwin-amd64
-    - droi-checker-linux-386
-    - droi-checker-linux-amd64
-    - droi-checker-windows-386.exe
-    - droi-checker-windows-amd64.exe
+    - "droi-checker-darwin-amd64"
+    - "droi-checker-linux-386"
+    - "droi-checker-linux-amd64"
+    - "droi-checker-windows-386.exe"
+    - "droi-checker-windows-amd64.exe"
   on:
     repo: Droi-SDK/droi-checker
     tags: true
