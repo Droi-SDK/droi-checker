@@ -3,7 +3,6 @@ package commands
 import (
 	"strings"
 	"github.com/Droi-SDK/droi-checker/logger"
-	"regexp"
 )
 
 func depCheck(dep compile){
@@ -21,6 +20,8 @@ func depCheck(dep compile){
 	default:
 	}
 }
+
+// TODO 各个sdk在java中的初始化
 
 func coreCheck(compile compile) {
 	versionCheck(compile)
