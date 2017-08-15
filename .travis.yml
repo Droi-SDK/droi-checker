@@ -6,4 +6,7 @@ go:
 
 script:
   - go install
+  - go test -v github.com/Droi-SDK/droi-checker
+  - go test -v github.com/Droi-SDK/droi-checker/commands
+  - go test -v github.com/Droi-SDK/droi-checker/logger
 
