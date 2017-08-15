@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,17 +8,11 @@ import (
 	"io/ioutil"
 
 	"github.com/urfave/cli"
-	"github.com/fatih/color"
-	"github.com/mattn/go-colorable"
-)
-
-var(
-	output = colorable.NewColorableStderr()
+	"github.com/Droi-SDK/droi-checker/logger"
 )
 
 func checkAction(c *cli.Context) error {
 	path := c.Args().First()
-	prefix := color.GreenString("[work dir]")
 
 	if strings.HasPrefix(path, "-") {
 		return errors.New("Don't use - prefix")
@@ -31,19 +24,17 @@ func checkAction(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Fprintln(output, prefix, absPath)
+	logger.Info("Current work dir:" + absPath)
 	platform := whichPlatform(absPath)
-	platformPrefix := color.GreenString("[platform]")
 
 	switch platform {
 	case "android":
-		fmt.Fprintln(output, platformPrefix, "android")
+		logger.Info("Platform:" + "android")
 		androidChecker(absPath)
 	case "ios":
-		fmt.Fprintln(output, platformPrefix, "ios")
+		logger.Info("Platform:" + "ios")
 	default:
-		fmt.Fprintln(output, platformPrefix, "unknown")
-		errors.New("Unknown platform")
+		logger.Info("Platform:" + "unknown")
 	}
 	return nil
 }

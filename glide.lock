@@ -1,8 +1,12 @@
 hash: 68df455f71668bf92b5211338ee3a2b6c1b25eafc981ff8a9337b51459b455bd
-updated: 2017-08-14T14:29:17.5786856+08:00
+updated: 2017-08-15T16:02:24.0823729+08:00
 imports:
 - name: github.com/fatih/color
   version: 570b54cabe6b8eb0bc2dfce68d964677d63b5260
+- name: github.com/google/go-querystring
+  version: 9235644dd9e52eeae6fa48efd539fdc351a0af53
+  subpackages:
+  - query
 - name: github.com/levigross/grequests
   version: 14e4175cc49ce3783f0848f90b0527ba09e1d209
 - name: github.com/mattn/go-colorable
@@ -12,7 +16,13 @@ imports:
   repo: https://github.com/mattn/go-isatty
 - name: github.com/urfave/cli
   version: f017f86fccc5a039a98f23311f34fdf78b014f78
-- name: golang.org/x/sys/unix
+- name: golang.org/x/net
+  version: 45e771701b814666a7eb299e6c7a57d0b1799e91
+  subpackages:
+  - publicsuffix
+- name: golang.org/x/sys
   version: e24f485414aeafb646f6fca458b0bf869c0880a1
   repo: https://go.googlesource.com/sys
+  subpackages:
+  - unix
 testImports: []
