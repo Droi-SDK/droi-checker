@@ -1,4 +1,4 @@
-OUTPUT=./_build
+OUTPUT=$TRAVIS_BUILD_DIR
 SRC=$(shell find . -iname "*.go")
 LDFLAGS='-X main.pkgType=binary -s -w'
 RESOURCES=$(wildcard ./console/resources/*.html)
