@@ -1,28 +1,22 @@
-# Golang CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 jobs:
   build:
     docker:
-      # specify the version
       - image: circleci/golang:1.8
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    #### TEMPLATE_NOTE: go expects specific checkout path representing url
-    #### expecting it in the form of
-    ####   /go/src/github.com/circleci/go-tool
-    ####   /go/src/bitbucket.org/circleci/go-tool
     working_directory: /go/src/github.com/Droi-SDK/droi-checker
     steps:
       - checkout
+      # to install glide
+      - run: curl https://glide.sh/get | sh
 
-      # specify any bash command here prefixed with `run: `
-      - run: go get -v -t -d ./...
-      - run: go test -v ./
-      - run: go test -v ./commands
-      - run: go test -v ./logger
+      # Cache vendor/
+      - restore_cache:
+          keys:
+            - glide-cache-{{ checksum "glide.lock" }}
+            - glide-cache
+      - run: glide install
+      - save_cache:
+          key: glide-cache-{{ checksum "glide.lock" }}
+          paths: vendor/
+
+      - run: go test $(glide novendor)
