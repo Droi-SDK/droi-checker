@@ -13,10 +13,10 @@ func parseApplication(applicationPath string) {
 	fmt.Println(string(applicationFile))
 }
 
-func findIntialize(javaPath string) (bool) {
+func checkInitialize(javaPath string, compileArray []compile) (bool) {
 	files, _ := WalkDir(javaPath)
 	for i := range files {
-		b, setChannel := findinit(files[i])
+		b, setChannel := findInit(files[i], compileArray)
 		if b {
 			return setChannel
 			break
@@ -25,7 +25,7 @@ func findIntialize(javaPath string) (bool) {
 	return false
 }
 
-func findinit(path string) (b bool, setChannel bool) {
+func findInit(path string, compileArray []compile) (b bool, setChannel bool) {
 	file := loadFile(path)
 	regInit := regexp.MustCompile(`Core[\s]*.[\s]*initialize[\s]*\([\s]*this[\w\.]*[\s]*\)[\s]*;`)
 	initSlice := regInit.FindAllSubmatchIndex(file, -1)
@@ -42,6 +42,35 @@ func findinit(path string) (b bool, setChannel bool) {
 			}
 		}
 		b = true
+		for i:= range compileArray {
+			logger.Error("xxx")
+			sdkName := converArtifactId(compileArray[i].artifactId)
+			regSdk := regexp.MustCompile(sdkName+`[\s]*.[\s]*initialize[\s]*\([\s]*this[\w\.]*[\s]*[\,][\s]*[\w\_][\s]*\)[\s]*;`)
+			sdkSlice := regSdk.FindAllSubmatchIndex(file, -1)
+			if len(sdkSlice) != 0 {
+				setChannel = true
+				if sdkSlice[0][0] > initSlice[0][0] {
+					logger.Info(sdkName+"initialize",
+						string(file[sdkSlice[0][2]:sdkSlice[0][3]]))
+				} else {
+					logger.Error(sdkName+"initialize使用错误，请检查是否在Core.intialize()之后调用")
+				}
+			}
+		}
+	}
+	return
+}
+
+func converArtifactId(artifactId string) (sdkName string) {
+	switch artifactId {
+	case "feedback":
+		sdkName = "DroiFeedback"
+	case "selfupdate":
+		sdkName = "DroiUpdate"
+	case "analytics":
+		sdkName = "DroiAnalytics"
+	case "push":
+		sdkName = "DroiPush"
 	}
 	return
 }

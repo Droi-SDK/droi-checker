@@ -23,10 +23,7 @@ func androidChecker(path string) error {
 		getProjectExt()
 		if isApplication {
 			droibaasCompile := parseBuildGradle(moduleAbsPath)
-			for i := range droibaasCompile {
-				dep := droibaasCompile[i]
-				depCheck(dep)
-			}
+			depCheck(droibaasCompile)
 			// TODO
 			/*applicationPathDot := parseManifest(moduleAbsPath)
 			applicationPath := getApplicationPathFromDot(moduleAbsPath, applicationPathDot)
@@ -36,7 +33,7 @@ func androidChecker(path string) error {
 				logger.Error("解析manifest错误")
 			}
 			javaPath := filepath.Join(moduleAbsPath, "src", "main", "java")
-			setChannel2 := findIntialize(javaPath)
+			setChannel2 := checkInitialize(javaPath,droibaasCompile)
 			if !setChannel1 && !setChannel2 {
 				logger.Warn("请设置渠道号，否则将使用默认渠道号：UNKNOWN_CHANNEL")
 			}

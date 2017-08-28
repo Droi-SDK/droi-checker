@@ -5,42 +5,11 @@ import (
 	"github.com/Droi-SDK/droi-checker/logger"
 )
 
-func depCheck(dep compile){
-	switch dep.artifactId {
-	case "Core":
-		coreCheck(dep)
-	case "push":
-		pushCheck(dep)
-	case "feedback":
-		feedbackCheck(dep)
-	case "selfupdate":
-		selfupdateCheck(dep)
-	case "analytics":
-		analyticsCheck(dep)
-	default:
+func depCheck(compileArray []compile) {
+	for i := range compileArray {
+		dep := compileArray[i]
+		versionCheck(dep);
 	}
-}
-
-// TODO 各个sdk在java中的初始化
-
-func coreCheck(compile compile) {
-	versionCheck(compile)
-}
-
-func pushCheck(compile compile) {
-	versionCheck(compile)
-}
-
-func selfupdateCheck(compile compile) {
-	versionCheck(compile)
-}
-
-func analyticsCheck(compile compile) {
-	versionCheck(compile)
-}
-
-func feedbackCheck(compile compile) {
-	versionCheck(compile)
 }
 
 func versionCheck(compile compile) {
