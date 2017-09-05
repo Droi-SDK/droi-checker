@@ -8,14 +8,14 @@ import (
 )
 
 type Manifest struct {
-	XMLName     xml.Name `xml:"manifest"`
+	XMLName     xml.Name    `xml:"manifest"`
 	Application Application `xml:"application"`
-	Package     string `xml:"package,attr"`
+	Package     string      `xml:"package,attr"`
 }
 
 type Application struct {
 	Metadatas []Metadata `xml:"meta-data"`
-	Name      string `xml:"name,attr"`
+	Name      string     `xml:"name,attr"`
 }
 
 type Metadata struct {
@@ -23,7 +23,7 @@ type Metadata struct {
 	Value string `xml:"value,attr"`
 }
 
-func parseManifest(modulePath string) (ok bool, applicationFilePath string, setChannel bool) {
+func parseManifest(modulePath string) (ok bool, applicationFilePath string, setChannel bool, channelName string) {
 	mainManifestPath := filepath.Join(modulePath, "src", "main", "AndroidManifest.xml")
 	mainManifestFile := loadFile(mainManifestPath)
 	//fmt.Println(string(mainManifestFile))
@@ -38,12 +38,12 @@ func parseManifest(modulePath string) (ok bool, applicationFilePath string, setC
 		} else {
 			applicationFilePath = manifest.Application.Name
 		}
-		setChannel = checkKeys(manifest)
+		setChannel, channelName = checkKeys(manifest)
 	}
 	return
 }
 
-func checkKeys(manifest Manifest) (bool) {
+func checkKeys(manifest Manifest) (bool, string) {
 	metadatas := manifest.Application.Metadatas
 	hasApplicationId, applicationIdIndex := hasKey(metadatas, "com.droi.sdk.application_id")
 	if hasApplicationId {
@@ -53,10 +53,11 @@ func checkKeys(manifest Manifest) (bool) {
 	}
 	hasChannelName, channelNameIndex := hasKey(metadatas, "com.droi.sdk.channel_name")
 	if hasChannelName {
-		logger.Info("channel_name is:", metadatas[channelNameIndex].Value)
-		return true
+		channelName := metadatas[channelNameIndex].Value
+		//logger.Info("channel_name is:", metadatas[channelNameIndex].Value)
+		return true, channelName
 	} else {
-		return false
+		return false, ""
 	}
 }
 

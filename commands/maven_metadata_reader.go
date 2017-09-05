@@ -8,7 +8,7 @@ import (
 
 type MavenMetadata struct {
 	XMLName xml.Name `xml:"metadata"`
-	Release string `xml:"versioning>release"`
+	Release string   `xml:"versioning>release"`
 }
 
 func readFile(module string) (file []byte) {
@@ -16,12 +16,9 @@ func readFile(module string) (file []byte) {
 		module +
 		"/maven-metadata.xml"
 	resp, err := grequests.Get(url, nil)
-	// You can modify the request by passing an optional RequestOptions struct
-
 	if err != nil {
 		log.Fatalln("Unable to make request: ", err)
 	}
-
 	return resp.Bytes()
 }
 
